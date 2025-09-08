@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Buoi07_TinhToan3
 {
@@ -45,6 +46,26 @@ namespace Buoi07_TinhToan3
             else if (radChia.Checked && so2 != 0) kq = so1 / so2;
             //Hiển thị kết quả lên trên ô kết quả
             txtKq.Text = kq.ToString();
+        }
+
+        private void txtSo1_TextChanged(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void txtSo1_MouseClick(object sender, MouseEventArgs e)
+        {
+            txtSo1.SelectAll();
+        }
+        
+        private void txtSo1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtSo2_MouseClick(object sender, MouseEventArgs e)
+        {
+            txtSo2.SelectAll();
         }
     }
 }

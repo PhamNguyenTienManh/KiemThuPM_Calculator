@@ -37,3 +37,13 @@ D:\hk1-nam4\kiem thu\KiemThuPM_Calculator\Buoi07_TinhToan3\obj\Debug\Buoi07_Tinh
 D:\hk1-nam4\kiem thu\KiemThuPM_Calculator\Buoi07_TinhToan3\obj\Debug\Buoi07_TinhToan3.csproj.CoreCompileInputs.cache
 D:\hk1-nam4\kiem thu\KiemThuPM_Calculator\Buoi07_TinhToan3\obj\Debug\Buoi07_TinhToan3.exe
 D:\hk1-nam4\kiem thu\KiemThuPM_Calculator\Buoi07_TinhToan3\obj\Debug\Buoi07_TinhToan3.pdb
+C:\Nam 4\KiemThuPM\KiemThuPM_Calculator\Buoi07_TinhToan3\bin\Debug\Buoi07_TinhToan3.exe.config
+C:\Nam 4\KiemThuPM\KiemThuPM_Calculator\Buoi07_TinhToan3\bin\Debug\Buoi07_TinhToan3.exe
+C:\Nam 4\KiemThuPM\KiemThuPM_Calculator\Buoi07_TinhToan3\bin\Debug\Buoi07_TinhToan3.pdb
+C:\Nam 4\KiemThuPM\KiemThuPM_Calculator\Buoi07_TinhToan3\obj\Debug\Buoi07_TinhToan3.csproj.AssemblyReference.cache
+C:\Nam 4\KiemThuPM\KiemThuPM_Calculator\Buoi07_TinhToan3\obj\Debug\Buoi07_TinhToan3.Form1.resources
+C:\Nam 4\KiemThuPM\KiemThuPM_Calculator\Buoi07_TinhToan3\obj\Debug\Buoi07_TinhToan3.Properties.Resources.resources
+C:\Nam 4\KiemThuPM\KiemThuPM_Calculator\Buoi07_TinhToan3\obj\Debug\Buoi07_TinhToan3.csproj.GenerateResource.cache
+C:\Nam 4\KiemThuPM\KiemThuPM_Calculator\Buoi07_TinhToan3\obj\Debug\Buoi07_TinhToan3.csproj.CoreCompileInputs.cache
+C:\Nam 4\KiemThuPM\KiemThuPM_Calculator\Buoi07_TinhToan3\obj\Debug\Buoi07_TinhToan3.exe
+C:\Nam 4\KiemThuPM\KiemThuPM_Calculator\Buoi07_TinhToan3\obj\Debug\Buoi07_TinhToan3.pdb

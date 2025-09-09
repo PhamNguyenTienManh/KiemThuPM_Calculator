@@ -43,7 +43,20 @@ namespace Buoi07_TinhToan3
             if (radCong.Checked) kq = so1 + so2;
             else if (radTru.Checked) kq = so1 - so2;
             else if (radNhan.Checked) kq = so1 * so2;
-            else if (radChia.Checked && so2 != 0) kq = so1 / so2;
+            else if (radChia.Checked)
+            {
+                if (so2 == 0)
+                {
+                    MessageBox.Show("Không thể chia cho 0!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtSo2.Focus();
+                    txtSo2.SelectAll();
+                    return;
+                }
+                else
+                {
+                    kq = so1 / so2;
+                }
+            }
             //Hiển thị kết quả lên trên ô kết quả
             txtKq.Text = kq.ToString();
         }
@@ -76,7 +89,9 @@ namespace Buoi07_TinhToan3
             {
                 MessageBox.Show("Không được để trống ô này");
                 tb.Focus();
+                return;
             }
+            ValidateNumberInput(txtSo1);
         }
 
         private void txtSo2_Leave(object sender, EventArgs e)
@@ -87,7 +102,22 @@ namespace Buoi07_TinhToan3
             {
                 MessageBox.Show("Không được để trống ô này");
                 tb.Focus();
+                return;
+            }
+            ValidateNumberInput(txtSo2);
+        }
+
+        private void ValidateNumberInput(System.Windows.Forms.TextBox tb)
+        {
+            // Nếu không phải số hợp lệ
+            double temp;
+            if (!double.TryParse(tb.Text, out temp))
+            {
+                MessageBox.Show("Chỉ được nhập số!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tb.Focus();
+                tb.SelectAll();
             }
         }
+
     }
 }

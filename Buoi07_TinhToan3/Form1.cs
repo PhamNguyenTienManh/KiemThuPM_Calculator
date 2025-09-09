@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Numerics;   // để dùng BigInteger
 
 namespace Buoi07_TinhToan3
 {
@@ -21,7 +21,7 @@ namespace Buoi07_TinhToan3
         private void Form1_Load(object sender, EventArgs e)
         {
             txtSo1.Text = txtSo2.Text = "0";
-            radCong.Checked = true;             //đầu tiên chọn phép cộng
+            radCong.Checked = true;             // đầu tiên chọn phép cộng
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
@@ -35,42 +35,90 @@ namespace Buoi07_TinhToan3
 
         private void btnTinh_Click(object sender, EventArgs e)
         {
-            //lấy giá trị của 2 ô số
-            double so1, so2, kq = 0;
-            so1 = double.Parse(txtSo1.Text);
-            so2 = double.Parse(txtSo2.Text);
-            //Thực hiện phép tính dựa vào phép toán được chọn
-            if (radCong.Checked) kq = so1 + so2;
-            else if (radTru.Checked) kq = so1 - so2;
-            else if (radNhan.Checked) kq = so1 * so2;
-            else if (radChia.Checked && so2 != 0) kq = so1 / so2;
-            //Hiển thị kết quả lên trên ô kết quả
-            txtKq.Text = kq.ToString();
+            try
+            {
+                // Lấy giá trị của 2 ô số (dùng BigInteger để tính số cực lớn)
+                BigInteger so1 = BigInteger.Parse(txtSo1.Text);
+                BigInteger so2 = BigInteger.Parse(txtSo2.Text);
+                BigInteger kq = 0;
+
+                // Thực hiện phép toán dựa vào phép toán được chọn
+                if (radCong.Checked) kq = so1 + so2;
+                else if (radTru.Checked) kq = so1 - so2;
+                else if (radNhan.Checked) kq = so1 * so2;
+                else if (radChia.Checked)
+                {
+                    if (so2 != 0)
+                    {
+                        // gọi hàm chia có thập phân (20 chữ số sau dấu phẩy)
+                        txtKq.Text = ChiaCoThapPhan(so1, so2, 20);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không thể chia cho 0");
+                        return;
+                    }
+                    return; // kết thúc sớm vì đã gán txtKq
+                }
+
+                // Hiển thị kết quả (với cộng, trừ, nhân)
+                txtKq.Text = kq.ToString();
+            }
+            catch
+            {
+                MessageBox.Show("Giá trị nhập vào không hợp lệ!");
+            }
+        }
+
+        // Hàm chia có phần thập phân (mặc định lấy 20 chữ số sau dấu phẩy)
+        private string ChiaCoThapPhan(BigInteger so1, BigInteger so2, int soChuSoSauDauPhay = 20)
+        {
+            if (so2.IsZero) return "Không thể chia cho 0";
+
+            BigInteger phanNguyen = so1 / so2;
+            BigInteger du = so1 % so2;
+
+            if (du.IsZero) return phanNguyen.ToString();
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(phanNguyen);
+            sb.Append(".");
+
+            for (int i = 0; i < soChuSoSauDauPhay; i++)
+            {
+                du *= 10;
+                BigInteger so = du / so2;
+                sb.Append(so);
+                du %= so2;
+                if (du.IsZero) break;
+            }
+
+            return sb.ToString();
         }
 
         private void txtSo1_TextChanged(object sender, EventArgs e)
         {
-          
+            // Bạn có thể xử lý gì đó khi text thay đổi, tạm thời để trống
         }
 
         private void txtSo1_MouseClick(object sender, MouseEventArgs e)
         {
-            txtSo1.SelectAll();
+            txtSo1.SelectAll();   // click chuột vào thì chọn hết số
         }
-        
+
         private void txtSo1_Click(object sender, EventArgs e)
         {
-
+            // Có thể xử lý thêm nếu cần, hiện tại để trống
         }
 
         private void txtSo2_MouseClick(object sender, MouseEventArgs e)
         {
-            txtSo2.SelectAll();
+            txtSo2.SelectAll();   // click chuột vào thì chọn hết số
         }
 
         private void txtSo1_Leave(object sender, EventArgs e)
         {
-            System.Windows.Forms.TextBox tb = sender as System.Windows.Forms.TextBox;
+            TextBox tb = sender as TextBox;
 
             if (string.IsNullOrWhiteSpace(tb.Text))
             {
@@ -81,7 +129,7 @@ namespace Buoi07_TinhToan3
 
         private void txtSo2_Leave(object sender, EventArgs e)
         {
-            System.Windows.Forms.TextBox tb = sender as System.Windows.Forms.TextBox;
+            TextBox tb = sender as TextBox;
 
             if (string.IsNullOrWhiteSpace(tb.Text))
             {

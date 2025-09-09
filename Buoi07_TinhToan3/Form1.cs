@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Numerics;   // thêm để dùng BigInteger
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Buoi07_TinhToan3
@@ -35,14 +36,20 @@ namespace Buoi07_TinhToan3
 
         private void btnTinh_Click(object sender, EventArgs e)
         {
-            //lấy giá trị của 2 ô số
-            double so1, so2, kq = 0;
-            so1 = double.Parse(txtSo1.Text);
-            so2 = double.Parse(txtSo2.Text);
-            //Thực hiện phép tính dựa vào phép toán được chọn
-            if (radCong.Checked) kq = so1 + so2;
-            else if (radTru.Checked) kq = so1 - so2;
-            else if (radNhan.Checked) kq = so1 * so2;
+            // lấy giá trị của 2 ô số dưới dạng BigInteger
+            BigInteger so1, so2;
+            if (!BigInteger.TryParse(txtSo1.Text, out so1) || !BigInteger.TryParse(txtSo2.Text, out so2))
+            {
+                MessageBox.Show("Chỉ được nhập số nguyên!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string kq = "";
+
+            // Thực hiện phép toán dựa vào phép toán được chọn
+            if (radCong.Checked) kq = (so1 + so2).ToString();
+            else if (radTru.Checked) kq = (so1 - so2).ToString();
+            else if (radNhan.Checked) kq = (so1 * so2).ToString();
             else if (radChia.Checked)
             {
                 if (so2 == 0)
@@ -54,23 +61,34 @@ namespace Buoi07_TinhToan3
                 }
                 else
                 {
-                    kq = so1 / so2;
+                    // Nếu chia hết thì in số nguyên
+                    if (so1 % so2 == 0)
+                    {
+                        kq = (so1 / so2).ToString();
+                    }
+                    else
+                    {
+                        // chuyển sang double để ra số thập phân
+                        double thuong = (double)so1 / (double)so2;
+                        kq = thuong.ToString("0.##########"); // hiển thị tối đa 10 số sau dấu phẩy
+                    }
                 }
             }
-            //Hiển thị kết quả lên trên ô kết quả
-            txtKq.Text = kq.ToString();
+
+            // Hiển thị kết quả lên trên ô kết quả
+            txtKq.Text = kq;
         }
 
         private void txtSo1_TextChanged(object sender, EventArgs e)
         {
-          
+
         }
 
         private void txtSo1_MouseClick(object sender, MouseEventArgs e)
         {
             txtSo1.SelectAll();
         }
-        
+
         private void txtSo1_Click(object sender, EventArgs e)
         {
 
@@ -109,15 +127,14 @@ namespace Buoi07_TinhToan3
 
         private void ValidateNumberInput(System.Windows.Forms.TextBox tb)
         {
-            // Nếu không phải số hợp lệ
-            double temp;
-            if (!double.TryParse(tb.Text, out temp))
+            // Nếu không phải số nguyên hợp lệ
+            BigInteger temp;
+            if (!BigInteger.TryParse(tb.Text, out temp))
             {
-                MessageBox.Show("Chỉ được nhập số!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Chỉ được nhập số nguyên!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 tb.Focus();
                 tb.SelectAll();
             }
         }
-
     }
 }

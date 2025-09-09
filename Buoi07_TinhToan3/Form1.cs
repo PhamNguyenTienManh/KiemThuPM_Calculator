@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Numerics;   // để dùng BigInteger
 
 namespace Buoi07_TinhToan3
 {
@@ -36,9 +37,10 @@ namespace Buoi07_TinhToan3
         private void btnTinh_Click(object sender, EventArgs e)
         {
             //lấy giá trị của 2 ô số
-            double so1, so2, kq = 0;
-            so1 = double.Parse(txtSo1.Text);
-            so2 = double.Parse(txtSo2.Text);
+            BigInteger so1 = BigInteger.Parse(txtSo1.Text);
+            BigInteger so2 = BigInteger.Parse(txtSo2.Text);
+            BigInteger kq = 0;
+
             //Thực hiện phép tính dựa vào phép toán được chọn
             if (radCong.Checked) kq = so1 + so2;
             else if (radTru.Checked) kq = so1 - so2;
@@ -54,7 +56,8 @@ namespace Buoi07_TinhToan3
                 }
                 else
                 {
-                    kq = so1 / so2;
+                    txtKq.Text = ChiaCoThapPhan(so1, so2);
+                    return;
                 }
             }
             //Hiển thị kết quả lên trên ô kết quả
@@ -109,15 +112,38 @@ namespace Buoi07_TinhToan3
 
         private void ValidateNumberInput(System.Windows.Forms.TextBox tb)
         {
-            // Nếu không phải số hợp lệ
-            double temp;
-            if (!double.TryParse(tb.Text, out temp))
+            BigInteger temp;
+            if (!BigInteger.TryParse(tb.Text, out temp))
             {
-                MessageBox.Show("Chỉ được nhập số!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Chỉ được nhập số nguyên!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 tb.Focus();
                 tb.SelectAll();
             }
         }
+
+        private string ChiaCoThapPhan(BigInteger so1, BigInteger so2, int soChuSoSauDauPhay = 20)
+        {
+            BigInteger phanNguyen = so1 / so2;
+            BigInteger du = so1 % so2;
+
+            if (du.IsZero) return phanNguyen.ToString();
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(phanNguyen);
+            sb.Append(".");
+
+            for (int i = 0; i < soChuSoSauDauPhay; i++)
+            {
+                du *= 10;
+                BigInteger so = du / so2;
+                sb.Append(so);
+                du %= so2;
+                if (du.IsZero) break;
+            }
+
+            return sb.ToString();
+        }
+
 
     }
 }

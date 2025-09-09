@@ -67,5 +67,27 @@ namespace Buoi07_TinhToan3
         {
             txtSo2.SelectAll();
         }
+
+        private void txtSo1_Leave(object sender, EventArgs e)
+        {
+            System.Windows.Forms.TextBox tb = sender as System.Windows.Forms.TextBox;
+
+            if (string.IsNullOrWhiteSpace(tb.Text))
+            {
+                MessageBox.Show("Không được để trống ô này");
+                tb.Focus();
+            }
+        }
+
+        private void txtSo2_Leave(object sender, EventArgs e)
+        {
+            System.Windows.Forms.TextBox tb = sender as System.Windows.Forms.TextBox;
+
+            if (string.IsNullOrWhiteSpace(tb.Text))
+            {
+                MessageBox.Show("Không được để trống ô này");
+                tb.Focus();
+            }
+        }
     }
 }
